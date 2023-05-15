@@ -26,6 +26,15 @@
       "rating": 4,
       "featured": true,
       "id": 4
+    },
+    {
+      "name": "Rich Dad Poor Dad",
+      "author": "Robert Kiyosaki",
+      "thumbnail": "https://www.gardners.lk/wp-content/uploads/2020/05/9781612680170.jpg",
+      "price": 500,
+      "rating": 5,
+      "featured": true,
+      "id": 7
     }
   ]
 }

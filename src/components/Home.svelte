@@ -1,6 +1,17 @@
 <script>
-  import { each } from "svelte/internal";
+  import { onMount } from "svelte";
+  import axiosInstance from "../utils/AxiosInstance";
   import SingleBooks from "./SingleBooks.svelte";
+  let bookData = [];
+
+  function getUserAccount() {
+    return axiosInstance.get("/books");
+  }
+
+  onMount(async () => {
+    const response = await getUserAccount();
+    bookData = response.data;
+  });
 </script>
 
 <main class="py-12 px-6 2xl:px-6 container">
@@ -16,9 +27,9 @@
     <div
       class="space-y-6 md:space-y-0 md:grid grid-cols-1 lg:grid-cols-3 gap-6"
     >
-      <!-- Card 1 -->
-
-      <SingleBooks />
+      {#each bookData as data}
+        <SingleBooks {data} />
+      {/each}
     </div>
   </div>
 </main>

@@ -1,4 +1,6 @@
 <script>
+  import axiosInstance from "../../utils/AxiosInstance";
+
   let title = "";
   let author = "";
   let imgUrl = "";
@@ -6,16 +8,25 @@
   let rating = "";
   let IsFeatured = "";
 
+  const addBookHandler = async () => {
+    try {
+      let res = await axiosInstance.post(`/books`, {
+        name: title,
+        author: author,
+        thumbnail: imgUrl,
+        price: price,
+        rating: rating,
+        featured: IsFeatured,
+      });
+      return await res.data;
+    } catch (error) {
+      console.warn(error.message);
+    }
+  };
+
   const formHandler = (e) => {
     e.preventDefault();
-    console.table({
-      title,
-      author,
-      imgUrl,
-      price,
-      rating,
-      IsFeatured,
-    });
+    addBookHandler();
   };
 </script>
 
