@@ -9,11 +9,6 @@
   <img class="h-[240px] w-[170px] object-cover" src={thumbnail} alt="book" />
   <div class="flex-1 h-full pr-2 pt-2 flex flex-col">
     <div class="flex items-center justify-between">
-      <!-- {
-        featured && (
-          <span class="lws-badge">featured</span>
-        )
-      } -->
       {#if featured}
         <span class="lws-badge">featured</span>
       {:else}
