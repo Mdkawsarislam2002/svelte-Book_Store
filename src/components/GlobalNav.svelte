@@ -1,5 +1,6 @@
 <script>
   import logo from "../assets/logo.svg";
+  import { searchValue } from "./../store.js";
 </script>
 
 <nav class="py-4 2xl:px-6">
@@ -36,6 +37,7 @@
           placeholder="Filter books..."
           class="search"
           id="lws-search"
+          on:input={(e) => searchValue.set(e.target.value)}
         />
       </div>
     </form>

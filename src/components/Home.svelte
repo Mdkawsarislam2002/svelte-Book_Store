@@ -2,15 +2,35 @@
   import { onMount } from "svelte";
   import axiosInstance from "../utils/AxiosInstance";
   import SingleBooks from "./SingleBooks.svelte";
+  import { filterValues, searchValue } from "../store";
   let bookData = [];
+  let _searchValue;
+  let _filterValues;
 
-  function getUserAccount() {
-    return axiosInstance.get("/books");
+  function getUserAccount({ filter, searchQuery }) {
+    let res;
+    let checkFeature = filter === "featured";
+    if (checkFeature) {
+      res = `books?featured=${checkFeature}&name_like=${searchQuery}`;
+    } else {
+      res = `books?name_like=${searchQuery}`;
+    }
+    return axiosInstance.get(res);
   }
 
   onMount(async () => {
-    const response = await getUserAccount();
+    const response = await getUserAccount({
+      filter: _filterValues,
+      searchQuery: _searchValue,
+    });
     bookData = response.data;
+  });
+
+  searchValue.subscribe((value) => {
+    _searchValue = value;
+  });
+  filterValues.subscribe((value) => {
+    _filterValues = value;
   });
 </script>
 
@@ -20,8 +40,14 @@
       <h4 class="mt-2 text-xl font-bold">Book List</h4>
 
       <div class="flex items-center space-x-4">
-        <button class="lws-filter-btn active-filter">All</button>
-        <button class="lws-filter-btn">Featured</button>
+        <button
+          on:click={(e) => filterValues.set("all")}
+          class="lws-filter-btn active-filter">All</button
+        >
+        <button
+          on:click={(e) => filterValues.set("featured")}
+          class="lws-filter-btn">Featured</button
+        >
       </div>
     </div>
     <div
